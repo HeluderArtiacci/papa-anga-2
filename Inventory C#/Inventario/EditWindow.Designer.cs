@@ -30,7 +30,6 @@
         {
             this.label1 = new System.Windows.Forms.Label();
             this.itemName = new System.Windows.Forms.TextBox();
-            this.BT_Save = new System.Windows.Forms.Button();
             this.PriceValue = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -43,6 +42,8 @@
             this.itemDesc = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.itemPicture = new System.Windows.Forms.PictureBox();
+            this.BT_Save = new System.Windows.Forms.Button();
+            this.BT_Cancel = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.PriceValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SellPriceValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemPicture)).BeginInit();
@@ -64,16 +65,6 @@
             this.itemName.Name = "itemName";
             this.itemName.Size = new System.Drawing.Size(226, 30);
             this.itemName.TabIndex = 2;
-            // 
-            // BT_Save
-            // 
-            this.BT_Save.Location = new System.Drawing.Point(127, 324);
-            this.BT_Save.Name = "BT_Save";
-            this.BT_Save.Size = new System.Drawing.Size(113, 47);
-            this.BT_Save.TabIndex = 3;
-            this.BT_Save.Text = "Save";
-            this.BT_Save.UseVisualStyleBackColor = true;
-            this.BT_Save.Click += new System.EventHandler(this.BT_Save_Click);
             // 
             // PriceValue
             // 
@@ -157,11 +148,10 @@
             this.ProductID.Size = new System.Drawing.Size(223, 25);
             this.ProductID.TabIndex = 12;
             this.ProductID.TextAlign = System.Drawing.ContentAlignment.TopRight;
-            this.ProductID.Click += new System.EventHandler(this.label6_Click);
             // 
             // itemDesc
             // 
-            this.itemDesc.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.itemDesc.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.itemDesc.Location = new System.Drawing.Point(246, 225);
             this.itemDesc.Multiline = true;
             this.itemDesc.Name = "itemDesc";
@@ -180,7 +170,8 @@
             // itemPicture
             // 
             this.itemPicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.itemPicture.Image = global::Inventario.Properties.Resources.missingImage;
+            this.itemPicture.ErrorImage = global::Inventario.Properties.Resources.missingImage;
+            this.itemPicture.Image = global::Inventario.Properties.Resources.UploadImage;
             this.itemPicture.Location = new System.Drawing.Point(12, 12);
             this.itemPicture.Name = "itemPicture";
             this.itemPicture.Padding = new System.Windows.Forms.Padding(5);
@@ -188,12 +179,37 @@
             this.itemPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.itemPicture.TabIndex = 0;
             this.itemPicture.TabStop = false;
+            this.itemPicture.DoubleClick += new System.EventHandler(this.itemPicture_DoubleClick);
+            // 
+            // BT_Save
+            // 
+            this.BT_Save.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.BT_Save.Location = new System.Drawing.Point(12, 324);
+            this.BT_Save.Name = "BT_Save";
+            this.BT_Save.Size = new System.Drawing.Size(99, 47);
+            this.BT_Save.TabIndex = 15;
+            this.BT_Save.Text = "Save";
+            this.BT_Save.UseVisualStyleBackColor = true;
+            this.BT_Save.Click += new System.EventHandler(this.BT_Save_Click);
+            // 
+            // BT_Cancel
+            // 
+            this.BT_Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.BT_Cancel.Location = new System.Drawing.Point(141, 324);
+            this.BT_Cancel.Name = "BT_Cancel";
+            this.BT_Cancel.Size = new System.Drawing.Size(99, 47);
+            this.BT_Cancel.TabIndex = 16;
+            this.BT_Cancel.Text = "Cancel";
+            this.BT_Cancel.UseVisualStyleBackColor = true;
+            this.BT_Cancel.Click += new System.EventHandler(this.BT_Cancel_Click);
             // 
             // EditWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(484, 383);
+            this.Controls.Add(this.BT_Cancel);
+            this.Controls.Add(this.BT_Save);
             this.Controls.Add(this.itemDesc);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.ProductID);
@@ -205,7 +221,6 @@
             this.Controls.Add(this.SellPriceValue);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.PriceValue);
-            this.Controls.Add(this.BT_Save);
             this.Controls.Add(this.itemName);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.itemPicture);
@@ -225,7 +240,6 @@
         private System.Windows.Forms.PictureBox itemPicture;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox itemName;
-        private System.Windows.Forms.Button BT_Save;
         private System.Windows.Forms.NumericUpDown PriceValue;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -237,5 +251,7 @@
         private System.Windows.Forms.Label ProductID;
         private System.Windows.Forms.TextBox itemDesc;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Button BT_Save;
+        private System.Windows.Forms.Button BT_Cancel;
     }
 }

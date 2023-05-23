@@ -3,10 +3,11 @@ D:\Projects\ELCI\papa-anga-2\Inventory C#\Inventario\bin\Debug\Inventario.exe
 D:\Projects\ELCI\papa-anga-2\Inventory C#\Inventario\bin\Debug\Inventario.pdb
 D:\Projects\ELCI\papa-anga-2\Inventory C#\Inventario\obj\Debug\Inventario.csproj.AssemblyReference.cache
 D:\Projects\ELCI\papa-anga-2\Inventory C#\Inventario\obj\Debug\Inventario.csproj.SuggestedBindingRedirects.cache
-D:\Projects\ELCI\papa-anga-2\Inventory C#\Inventario\obj\Debug\Inventario.Form1.resources
 D:\Projects\ELCI\papa-anga-2\Inventory C#\Inventario\obj\Debug\Inventario.Properties.Resources.resources
 D:\Projects\ELCI\papa-anga-2\Inventory C#\Inventario\obj\Debug\Inventario.csproj.GenerateResource.cache
 D:\Projects\ELCI\papa-anga-2\Inventory C#\Inventario\obj\Debug\Inventario.csproj.CoreCompileInputs.cache
 D:\Projects\ELCI\papa-anga-2\Inventory C#\Inventario\obj\Debug\Inventario.exe
 D:\Projects\ELCI\papa-anga-2\Inventory C#\Inventario\obj\Debug\Inventario.pdb
 D:\Projects\ELCI\papa-anga-2\Inventory C#\Inventario\obj\Debug\Inventario.EditWindow.resources
+D:\Projects\ELCI\papa-anga-2\Inventory C#\Inventario\obj\Debug\Inventario.Inventory.resources
+D:\Projects\ELCI\papa-anga-2\Inventory C#\Inventario\obj\Debug\Inventario.ItemControlForm.resources
