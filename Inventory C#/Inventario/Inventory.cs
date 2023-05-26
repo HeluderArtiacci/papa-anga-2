@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Media;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Threading;
@@ -16,9 +17,13 @@ namespace Inventario
     {
         private SoundPlayer soundPlayer;
 
-        public ItemControlForm ItemsForm = null;
+        public Form ItemsForm = null;
 
         public static BindingList<Item> ItemsList { get; set; }
+
+        public static BindingList<EntryData> EntriesData { get; set; }
+
+        static Random random = new Random();
         public Inventory()
         {
             InitializeComponent();
@@ -65,7 +70,38 @@ namespace Inventario
                 SellPrice = 0.75f
             });
 
+            for (int i = 0; i < 100; i++)
+            {
+                Item item = new Item();
+
+                // Generar datos aleatorios coherentes
+                item.Name = GenerateRandomString(8);
+                item.Manufacturer = GenerateRandomString(6);
+                item.Provider = GenerateRandomString(7);
+                item.Description = GenerateRandomString(30);
+                item.Price = GenerateRandomFloat(0.5f, 10f);
+                item.SellPrice = GenerateRandomFloat(item.Price, 12f);
+
+                // Generar y asignar la ID
+                item.ID = EditWindow.GenerateID(item);
+
+                retList.Add(item);
+            }
+
             return retList;
+        }
+
+        public static string GenerateRandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+        }
+
+        public static float GenerateRandomFloat(float minValue, float maxValue)
+        {
+            float randomValue = (float)(random.NextDouble() * (maxValue - minValue) + minValue);
+            return (float)Math.Round(randomValue, 2);
         }
 
         public static void SaveDataBase()
@@ -86,8 +122,13 @@ namespace Inventario
             // Deserializar la lista desde el archivo binario
             using (FileStream fs = new FileStream("database.bin", FileMode.Open))
             {
-                BinaryFormatter formatter = new BinaryFormatter();
-                ItemsList = (BindingList<Item>)formatter.Deserialize(fs);
+                try
+                {
+                    BinaryFormatter formatter = new BinaryFormatter();
+                    ItemsList = (BindingList<Item>)formatter.Deserialize(fs);
+                }
+                catch {
+                    MessageBox.Show("Los datos no pudieron ser cargados."); return; }
             }
 
             MessageBox.Show("Datos cargados correctamente.");
@@ -125,6 +166,7 @@ namespace Inventario
 
         private void BT_Items_Click(object sender, EventArgs e)
         {
+            DisposeOthers();
             if (ItemsForm == null)
             {
                 ItemsForm = new ItemControlForm() { TopLevel = false, TopMost = true };
@@ -137,20 +179,29 @@ namespace Inventario
 
         private void BT_EntryItems_Click(object sender, EventArgs e)
         {
-            playnose();
+            DisposeOthers();
+            if (ItemsForm == null)
+            {
+                ItemsForm = new EntryItemsForm() { TopLevel = false, TopMost = true };
+                ItemsForm.FormBorderStyle = FormBorderStyle.None;
+                ChildFormPanel.Controls.Add(ItemsForm);
+                ItemsForm.Show();
+            }
+            else { MessageBox.Show("Already  created!"); }
+            
         }
 
         private void Inventory_FormClosing(object sender, FormClosingEventArgs e)
         {
-
+            DisposeOthers();
         }
 
         private void BT_ExitItems_Click(object sender, EventArgs e)
         {
-            playnose();
+            
         }
 
-        void playnose()
+        void DisposeOthers()
         {
             if (ItemsForm != null)
             {
@@ -169,8 +220,8 @@ namespace Inventario
 
         private void BT_CheckIn_Click(object sender, EventArgs e)
         {
-           
-            playnose();
+
+            DisposeOthers();
         }
     }
 }

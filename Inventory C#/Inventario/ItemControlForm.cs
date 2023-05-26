@@ -116,19 +116,26 @@ namespace Inventario
 
         public void UpdateItem(Item myItem, int row)
         {
-            //MessageBox.Show($"RECIVE CALLBACK: UPDATE!");
-            Inventory.ItemsList[row] = myItem;
-            currentRow = row;
-            dataView.Refresh();
+            if (myItem != null)
+            {
+                //MessageBox.Show($"RECIVE CALLBACK: UPDATE!");
+                Inventory.ItemsList[row] = myItem;
+                currentRow = row;
+                Inventory.SaveDataBase();
+            }
             ReEnable();
 
         }
 
         public void NewItem(Item toAdd, int row)
         {
-            // MessageBox.Show($"RECIVE CALLBACK: NEW! {toAdd.Name}");
-            Inventory.ItemsList.Add(toAdd);
-            currentRow = Inventory.ItemsList.IndexOf(toAdd);
+            if (toAdd != null)
+            {
+                // MessageBox.Show($"RECIVE CALLBACK: NEW! {toAdd.Name}");
+                Inventory.ItemsList.Add(toAdd);
+                currentRow = Inventory.ItemsList.IndexOf(toAdd);
+                Inventory.SaveDataBase();
+            }
             ReEnable();
         }
 
@@ -141,8 +148,6 @@ namespace Inventario
         void ReEnable()
         {
             dataView.Refresh();
-            
-            Inventory.SaveDataBase();
             PrincipalPanel.Enabled = true;
             if (currentRow != -1)
             {
@@ -167,12 +172,13 @@ namespace Inventario
 
             if (row != -1)
             {
+                Disable();
                 EditWindow itemEdit = new EditWindow();
                 itemEdit.SetData(Inventory.ItemsList[row], row);
 
                 TaskCompletedCallBack callback = UpdateItem;
                 itemEdit.SetCallback(callback);
-
+                itemEdit.TopMost = true;
                 itemEdit.Show();
             }
         }
@@ -190,7 +196,7 @@ namespace Inventario
 
             TaskCompletedCallBack callback = NewItem;
             itemEdit.SetCallback(callback);
-
+            itemEdit.TopMost = true;
             itemEdit.Show();
             Disable();
         }
@@ -205,7 +211,7 @@ namespace Inventario
 
                 TaskCompletedCallBack callback = UpdateItem;
                 itemEdit.SetCallback(callback);
-
+                itemEdit.TopMost = true;
                 itemEdit.Show();
                 Disable();
             }
@@ -252,6 +258,13 @@ namespace Inventario
             }
             else
                 itemPicture.Image = Resources.missingImage;
+            nameLabel.Text = currentItem.Name;
+            codeLabel.Text = currentItem.ID;
+            priceLabel.Text = $"${currentItem.Price}";
+            sellPriceLabel.Text = $"${currentItem.SellPrice}";
+            manuLabel.Text = $"{currentItem.Manufacturer}";
+            provLabel.Text = currentItem.Provider;
+            DescTextBox.Text = currentItem.Description;
         }
     }
 }

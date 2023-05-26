@@ -41,9 +41,9 @@
             this.ProductID = new System.Windows.Forms.Label();
             this.itemDesc = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.itemPicture = new System.Windows.Forms.PictureBox();
             this.BT_Save = new System.Windows.Forms.Button();
             this.BT_Cancel = new System.Windows.Forms.Button();
+            this.itemPicture = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.PriceValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.SellPriceValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.itemPicture)).BeginInit();
@@ -64,7 +64,7 @@
             this.itemName.Location = new System.Drawing.Point(246, 56);
             this.itemName.Name = "itemName";
             this.itemName.Size = new System.Drawing.Size(226, 30);
-            this.itemName.TabIndex = 2;
+            this.itemName.TabIndex = 1;
             // 
             // PriceValue
             // 
@@ -101,7 +101,7 @@
             this.SellPriceValue.Location = new System.Drawing.Point(117, 279);
             this.SellPriceValue.Name = "SellPriceValue";
             this.SellPriceValue.Size = new System.Drawing.Size(120, 30);
-            this.SellPriceValue.TabIndex = 6;
+            this.SellPriceValue.TabIndex = 5;
             this.SellPriceValue.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
             // label4
@@ -119,7 +119,7 @@
             this.itemManufacturer.Location = new System.Drawing.Point(246, 109);
             this.itemManufacturer.Name = "itemManufacturer";
             this.itemManufacturer.Size = new System.Drawing.Size(225, 30);
-            this.itemManufacturer.TabIndex = 9;
+            this.itemManufacturer.TabIndex = 2;
             // 
             // itemProvider
             // 
@@ -127,7 +127,7 @@
             this.itemProvider.Location = new System.Drawing.Point(246, 168);
             this.itemProvider.Name = "itemProvider";
             this.itemProvider.Size = new System.Drawing.Size(225, 30);
-            this.itemProvider.TabIndex = 11;
+            this.itemProvider.TabIndex = 3;
             // 
             // label5
             // 
@@ -156,7 +156,7 @@
             this.itemDesc.Multiline = true;
             this.itemDesc.Name = "itemDesc";
             this.itemDesc.Size = new System.Drawing.Size(225, 146);
-            this.itemDesc.TabIndex = 14;
+            this.itemDesc.TabIndex = 6;
             // 
             // label6
             // 
@@ -166,6 +166,29 @@
             this.label6.Size = new System.Drawing.Size(90, 13);
             this.label6.TabIndex = 13;
             this.label6.Text = "Especificaciones:";
+            // 
+            // BT_Save
+            // 
+            this.BT_Save.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.BT_Save.Location = new System.Drawing.Point(12, 324);
+            this.BT_Save.Name = "BT_Save";
+            this.BT_Save.Size = new System.Drawing.Size(99, 47);
+            this.BT_Save.TabIndex = 7;
+            this.BT_Save.Text = "Save";
+            this.BT_Save.UseVisualStyleBackColor = true;
+            this.BT_Save.Click += new System.EventHandler(this.BT_Save_Click);
+            // 
+            // BT_Cancel
+            // 
+            this.BT_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.BT_Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.BT_Cancel.Location = new System.Drawing.Point(141, 324);
+            this.BT_Cancel.Name = "BT_Cancel";
+            this.BT_Cancel.Size = new System.Drawing.Size(99, 47);
+            this.BT_Cancel.TabIndex = 16;
+            this.BT_Cancel.Text = "Cancel";
+            this.BT_Cancel.UseVisualStyleBackColor = true;
+            this.BT_Cancel.Click += new System.EventHandler(this.BT_Cancel_Click);
             // 
             // itemPicture
             // 
@@ -181,33 +204,15 @@
             this.itemPicture.TabStop = false;
             this.itemPicture.DoubleClick += new System.EventHandler(this.itemPicture_DoubleClick);
             // 
-            // BT_Save
-            // 
-            this.BT_Save.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.BT_Save.Location = new System.Drawing.Point(12, 324);
-            this.BT_Save.Name = "BT_Save";
-            this.BT_Save.Size = new System.Drawing.Size(99, 47);
-            this.BT_Save.TabIndex = 15;
-            this.BT_Save.Text = "Save";
-            this.BT_Save.UseVisualStyleBackColor = true;
-            this.BT_Save.Click += new System.EventHandler(this.BT_Save_Click);
-            // 
-            // BT_Cancel
-            // 
-            this.BT_Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.BT_Cancel.Location = new System.Drawing.Point(141, 324);
-            this.BT_Cancel.Name = "BT_Cancel";
-            this.BT_Cancel.Size = new System.Drawing.Size(99, 47);
-            this.BT_Cancel.TabIndex = 16;
-            this.BT_Cancel.Text = "Cancel";
-            this.BT_Cancel.UseVisualStyleBackColor = true;
-            this.BT_Cancel.Click += new System.EventHandler(this.BT_Cancel_Click);
-            // 
             // EditWindow
             // 
+            this.AcceptButton = this.BT_Save;
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.CancelButton = this.BT_Cancel;
             this.ClientSize = new System.Drawing.Size(484, 383);
+            this.ControlBox = false;
             this.Controls.Add(this.BT_Cancel);
             this.Controls.Add(this.BT_Save);
             this.Controls.Add(this.itemDesc);
@@ -224,8 +229,16 @@
             this.Controls.Add(this.itemName);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.itemPicture);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "EditWindow";
+            this.ShowIcon = false;
+            this.ShowInTaskbar = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form2";
+            this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EditWindow_FormClosing);
             this.Load += new System.EventHandler(this.EditWindow_Load);
             ((System.ComponentModel.ISupportInitialize)(this.PriceValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.SellPriceValue)).EndInit();

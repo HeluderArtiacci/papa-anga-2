@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+
 namespace Inventario
 {
     
@@ -87,6 +88,9 @@ namespace Inventario
             string carpetaDestino = Path.Combine(Application.StartupPath, "ItemImages");
             string rutaDestino = Path.Combine(carpetaDestino, currentItem.ID);
 
+            if (!Directory.Exists(carpetaDestino))
+                Directory.CreateDirectory(carpetaDestino);
+
             string[] archivosEnDirectorio = Directory.GetFiles(carpetaDestino, currentItem.ID + ".*");
 
             foreach (string archivo in archivosEnDirectorio)
@@ -99,8 +103,7 @@ namespace Inventario
                 { }
             }
 
-            if (!Directory.Exists(carpetaDestino))
-                Directory.CreateDirectory(carpetaDestino);
+            
 
             File.Copy(imageLoaded, rutaDestino, true);
 
@@ -175,6 +178,21 @@ namespace Inventario
 
         private void BT_Cancel_Click(object sender, EventArgs e)
         {
+            CloseWindow();
+        }
+
+        private void EditWindow_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            CloseWindow();
+            
+        }
+
+        void CloseWindow()
+        {
+            if (callback != null)
+            {
+                callback(null, ItemRow);
+            }
             this.Dispose();
         }
     }
