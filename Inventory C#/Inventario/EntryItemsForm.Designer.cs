@@ -55,6 +55,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.entriesDropDown = new System.Windows.Forms.ComboBox();
             this.dataView = new System.Windows.Forms.DataGridView();
+            this.filterItems = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -86,6 +87,7 @@
             // 
             // EditPanel
             // 
+            this.EditPanel.Controls.Add(this.filterItems);
             this.EditPanel.Controls.Add(this.itemCode);
             this.EditPanel.Controls.Add(this.totalLabel);
             this.EditPanel.Controls.Add(this.label9);
@@ -114,7 +116,7 @@
             // itemCode
             // 
             this.itemCode.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.itemCode.Location = new System.Drawing.Point(151, 309);
+            this.itemCode.Location = new System.Drawing.Point(151, 334);
             this.itemCode.Name = "itemCode";
             this.itemCode.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.itemCode.Size = new System.Drawing.Size(105, 17);
@@ -126,7 +128,7 @@
             // 
             this.totalLabel.AutoSize = true;
             this.totalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.totalLabel.Location = new System.Drawing.Point(68, 469);
+            this.totalLabel.Location = new System.Drawing.Point(68, 494);
             this.totalLabel.Name = "totalLabel";
             this.totalLabel.Size = new System.Drawing.Size(34, 25);
             this.totalLabel.TabIndex = 51;
@@ -136,7 +138,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.label9.Location = new System.Drawing.Point(3, 467);
+            this.label9.Location = new System.Drawing.Point(3, 492);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(73, 25);
             this.label9.TabIndex = 50;
@@ -146,7 +148,7 @@
             // 
             this.nameLabel.AutoSize = true;
             this.nameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.nameLabel.Location = new System.Drawing.Point(7, 309);
+            this.nameLabel.Location = new System.Drawing.Point(7, 334);
             this.nameLabel.Name = "nameLabel";
             this.nameLabel.Size = new System.Drawing.Size(53, 17);
             this.nameLabel.TabIndex = 49;
@@ -156,7 +158,7 @@
             // 
             this.sellPriceLabel.AutoSize = true;
             this.sellPriceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.sellPriceLabel.Location = new System.Drawing.Point(146, 444);
+            this.sellPriceLabel.Location = new System.Drawing.Point(146, 469);
             this.sellPriceLabel.Name = "sellPriceLabel";
             this.sellPriceLabel.Size = new System.Drawing.Size(34, 25);
             this.sellPriceLabel.TabIndex = 48;
@@ -166,7 +168,7 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.label8.Location = new System.Drawing.Point(2, 442);
+            this.label8.Location = new System.Drawing.Point(2, 467);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(153, 25);
             this.label8.TabIndex = 47;
@@ -176,7 +178,7 @@
             // 
             this.priceLabel.AutoSize = true;
             this.priceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.priceLabel.Location = new System.Drawing.Point(68, 419);
+            this.priceLabel.Location = new System.Drawing.Point(68, 444);
             this.priceLabel.Name = "priceLabel";
             this.priceLabel.Size = new System.Drawing.Size(34, 25);
             this.priceLabel.TabIndex = 46;
@@ -186,7 +188,7 @@
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.label6.Location = new System.Drawing.Point(3, 417);
+            this.label6.Location = new System.Drawing.Point(3, 442);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(73, 25);
             this.label6.TabIndex = 45;
@@ -197,7 +199,7 @@
             this.stockLabel.AutoSize = true;
             this.stockLabel.BackColor = System.Drawing.Color.Transparent;
             this.stockLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.stockLabel.Location = new System.Drawing.Point(170, 335);
+            this.stockLabel.Location = new System.Drawing.Point(170, 360);
             this.stockLabel.Name = "stockLabel";
             this.stockLabel.Size = new System.Drawing.Size(16, 17);
             this.stockLabel.TabIndex = 44;
@@ -207,7 +209,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.label5.Location = new System.Drawing.Point(91, 334);
+            this.label5.Location = new System.Drawing.Point(91, 359);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(89, 17);
             this.label5.TabIndex = 43;
@@ -217,7 +219,7 @@
             // 
             this.itemPicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.itemPicture.Image = global::Inventario.Properties.Resources.missingImage;
-            this.itemPicture.Location = new System.Drawing.Point(7, 334);
+            this.itemPicture.Location = new System.Drawing.Point(7, 359);
             this.itemPicture.Name = "itemPicture";
             this.itemPicture.Padding = new System.Windows.Forms.Padding(5);
             this.itemPicture.Size = new System.Drawing.Size(80, 80);
@@ -243,7 +245,7 @@
             // 
             // BT_AddProduct
             // 
-            this.BT_AddProduct.Location = new System.Drawing.Point(6, 497);
+            this.BT_AddProduct.Location = new System.Drawing.Point(6, 522);
             this.BT_AddProduct.Name = "BT_AddProduct";
             this.BT_AddProduct.Size = new System.Drawing.Size(250, 23);
             this.BT_AddProduct.TabIndex = 39;
@@ -272,7 +274,7 @@
             // 
             // productCount
             // 
-            this.productCount.Location = new System.Drawing.Point(211, 276);
+            this.productCount.Location = new System.Drawing.Point(211, 301);
             this.productCount.Minimum = new decimal(new int[] {
             1,
             0,
@@ -298,8 +300,10 @@
             // 
             // itemsDropDown
             // 
+            this.itemsDropDown.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.itemsDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.itemsDropDown.FormattingEnabled = true;
-            this.itemsDropDown.Location = new System.Drawing.Point(7, 276);
+            this.itemsDropDown.Location = new System.Drawing.Point(7, 301);
             this.itemsDropDown.MaxDropDownItems = 10;
             this.itemsDropDown.Name = "itemsDropDown";
             this.itemsDropDown.Size = new System.Drawing.Size(197, 21);
@@ -350,6 +354,7 @@
             // 
             // entriesDropDown
             // 
+            this.entriesDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.entriesDropDown.FormattingEnabled = true;
             this.entriesDropDown.Location = new System.Drawing.Point(32, 47);
             this.entriesDropDown.Name = "entriesDropDown";
@@ -367,6 +372,15 @@
             this.dataView.ReadOnly = true;
             this.dataView.Size = new System.Drawing.Size(700, 450);
             this.dataView.TabIndex = 0;
+            // 
+            // filterItems
+            // 
+            this.filterItems.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.filterItems.Location = new System.Drawing.Point(7, 276);
+            this.filterItems.Name = "filterItems";
+            this.filterItems.Size = new System.Drawing.Size(100, 20);
+            this.filterItems.TabIndex = 53;
+            this.filterItems.TextChanged += new System.EventHandler(this.filterItems_TextChanged);
             // 
             // EntryItemsForm
             // 
@@ -421,5 +435,6 @@
         private System.Windows.Forms.NumericUpDown productCount;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox itemsDropDown;
+        private System.Windows.Forms.TextBox filterItems;
     }
 }

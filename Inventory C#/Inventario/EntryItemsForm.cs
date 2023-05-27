@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Inventario
 {
@@ -136,25 +137,6 @@ namespace Inventario
         }
 
 
-        private void itemsDropDown_TextChanged(object sender, EventArgs e)
-        {
-            itemsDropDown.DroppedDown = false;
-            string searchText = itemsDropDown.Text.ToLower();
-            itemsDropDown.Items.Clear();
-
-            // Filtra los elementos de acuerdo con el texto ingresado por el usuario
-            foreach (string item in ItemsdropDownList)
-            {
-                if (item.ToLower().Contains(searchText))
-                {
-                    itemsDropDown.Items.Add(item);
-                }
-            }
-
-            itemsDropDown.DroppedDown = true; // Muestra el cuadro desplegable con los resultados filtrados
-            itemsDropDown.SelectionStart = searchText.Length; // Establece el punto de inserción del texto en el ComboBox
-        }
-
         private void BT_NewEntry_Click(object sender, EventArgs e)
         {
             EntryData newEntry = new EntryData();
@@ -176,23 +158,44 @@ namespace Inventario
                 SetDataView(null);
         }
 
+        private void BT_AddProduct_Click(object sender, EventArgs e)
+        {
+            Inventory.EntriesData[currentData].Items.Add(new EntryItem(Inventory.ItemsList[currentItem].ID, (int)productCount.Value));
+            SetDataView(Inventory.EntriesData[currentData]);
+        }
+
+        private void itemsDropDown_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void filterItems_TextChanged(object sender, EventArgs e)
+        {
+
+            string searchText = filterItems.Text.ToLower();
+            itemsDropDown.Items.Clear();
+
+            // Filtra los elementos de acuerdo con el texto ingresado por el usuario
+            foreach (string item in ItemsdropDownList)
+            {
+                if (item.ToLower().Contains(searchText))
+                {
+                    itemsDropDown.Items.Add(item);
+                }
+            }
+        }
+
         private void itemsDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            foreach(string check in ItemsdropDownList)
+            foreach (string check in ItemsdropDownList)
             {
-                if(check == itemsDropDown.Text)
+                if (check == itemsDropDown.Text)
                 {
                     var index = ItemsdropDownList.IndexOf(check);
                     SetItemPreview(Inventory.ItemsList[index]);
                     currentItem = index;
                 }
             }
-        }
-
-        private void BT_AddProduct_Click(object sender, EventArgs e)
-        {
-            Inventory.EntriesData[currentData].Items.Add(new EntryItem(Inventory.ItemsList[currentItem].ID, (int)productCount.Value));
-            SetDataView(Inventory.EntriesData[currentData]);
         }
     }
 }
