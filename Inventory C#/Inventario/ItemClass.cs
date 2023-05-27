@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data.SqlTypes;
 using System.Drawing;
 using System.Linq;
+using System.Security.Policy;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,20 +12,32 @@ using System.Threading.Tasks;
 namespace Inventario
 {
     [Serializable]
+    public class DataBase
+    {
+        public BindingList<Item> ItemsList = new BindingList<Item>();
+        public BindingList<EntryData> EntriesData = new BindingList<EntryData>();
+    }
+
+    [Serializable]
     public class EntryData
     {
         public int Id { get; set; }
         public string Name { get; set; }
         public DateTime date { get; set; }
-        public BindingList<EntryItems> Items { get; set; }
+        public BindingList<EntryItem> Items = new BindingList<EntryItem>();
 
     }
     [Serializable]
-    public class EntryItems
+    public class EntryItem
     {
-        public Item Item { get; set; }
+        public string ItemID { get; set; }
         public int Count { get; set; }
 
+        public EntryItem(string itemID, int count)
+        {
+            ItemID = itemID;
+            Count = count;
+        }
     }
     [Serializable]
     public class Item : INotifyPropertyChanged

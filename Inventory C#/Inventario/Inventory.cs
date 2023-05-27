@@ -19,9 +19,8 @@ namespace Inventario
 
         public Form ItemsForm = null;
 
-        public static BindingList<Item> ItemsList { get; set; }
-
-        public static BindingList<EntryData> EntriesData { get; set; }
+        public static BindingList<Item> ItemsList = new BindingList<Item>(); 
+        public static BindingList<EntryData> EntriesData = new BindingList<EntryData>();
 
         static Random random = new Random();
         public Inventory()
