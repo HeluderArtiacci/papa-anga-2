@@ -77,8 +77,126 @@ namespace Inventario
                 e.FormattingApplied = true;
             }
         }
+  
+        private BindingList<Item> itemsList;  // Lista de objetos Item
+        private int currentItemIndex;  // Índice del elemento actual en la lista
+        private int totalPages;        // Número total de páginas
+        private int currentPage;       // Número de página actual
 
         public void PrintCurrentData()
+        {
+            totalPages = 0;
+            currentPage = 0;
+            currentItemIndex = 0;
+            itemsList = Inventory.ItemsList;
+            ConfigurePrinting();
+        }
+
+        private void FacturaPrintPage(object sender, PrintPageEventArgs e)
+        {
+            Graphics graphics = e.Graphics;
+            Font font = new Font("Arial", 12);
+            float lineHeight = font.GetHeight();
+
+            // Obtener los datos de la factura
+            string fecha = "08 de mayo de 2023";
+            string nombre = "Juan Pérez";
+
+            float startX = 70;
+            float startY = 100;
+            float currentY = startY;
+
+            // Imprimir encabezado solo en la primera página
+            if (currentPage == 0)
+            {
+                graphics.DrawString("Fecha: " + fecha, font, Brushes.Black, startX, currentY);
+                currentY += lineHeight;
+                graphics.DrawString("Nombre: " + nombre, font, Brushes.Black, startX, currentY);
+                currentY += lineHeight * 2;
+            }
+
+            // Imprimir cabecera de la tabla
+            string[] cabecera = { "ID", "Nombre", "Precio", "Precio Venta", "Proveedor", "Fabricante", "Stock" };
+            float tablaX = startX;
+            float tablaY = currentY;
+            float celdaAncho = 100;
+            float celdaAlto = lineHeight + 4;
+
+            for (int i = 0; i < cabecera.Length; i++)
+            {
+                float celdaX = tablaX + (i * celdaAncho);
+                graphics.DrawRectangle(Pens.Black, celdaX, tablaY, celdaAncho, celdaAlto);
+                graphics.DrawString(cabecera[i], font, Brushes.Black, celdaX, tablaY);
+            }
+
+            currentY += celdaAlto;
+
+            // Calcular número total de páginas
+            int itemsPerPage = (int)((e.MarginBounds.Height - currentY) / celdaAlto);
+            totalPages = (int)Math.Ceiling((double)itemsList.Count / itemsPerPage);
+
+
+            string pageInfo = (currentPage + 1) + " de " + totalPages;
+            float pageX = e.PageBounds.Right - graphics.MeasureString(pageInfo, font).Width;
+            float pageY = e.PageBounds.Bottom - lineHeight;
+
+            // Imprimir datos de la tabla
+            while (currentItemIndex < itemsList.Count)
+            {
+                // Verificar si es necesario crear una nueva página
+                if (currentY + celdaAlto > e.MarginBounds.Bottom)
+                {
+                    currentPage++;
+                    e.HasMorePages = true;
+                    pageInfo = currentPage + " de " + (currentPage == 1 ? totalPages-1 : totalPages);
+                    pageX = e.PageBounds.Right - graphics.MeasureString(pageInfo, font).Width;
+                    pageY = e.PageBounds.Bottom - lineHeight;
+                    graphics.DrawString(pageInfo, font, Brushes.Black, pageX-20, pageY-20);
+                    return;
+                }
+
+                Item item = itemsList[currentItemIndex];
+                float filaY = currentY;
+
+                graphics.DrawRectangle(Pens.Black, tablaX, filaY, celdaAncho, celdaAlto);
+                graphics.DrawString(item.ID, font, Brushes.Black, tablaX, filaY);
+
+                graphics.DrawRectangle(Pens.Black, tablaX + celdaAncho, filaY, celdaAncho, celdaAlto);
+                graphics.DrawString(item.Name.Substring(0, Math.Min(item.Name.Length, 15)), font, Brushes.Black, tablaX + celdaAncho, filaY);
+
+                graphics.DrawRectangle(Pens.Black, tablaX + (2 * celdaAncho), filaY, celdaAncho, celdaAlto);
+                graphics.DrawString(item.Price.ToString(), font, Brushes.Black, tablaX + (2 * celdaAncho), filaY);
+
+                graphics.DrawRectangle(Pens.Black, tablaX + (3 * celdaAncho), filaY, celdaAncho, celdaAlto);
+                graphics.DrawString(item.SellPrice.ToString(), font, Brushes.Black, tablaX + (3 * celdaAncho), filaY);
+
+                graphics.DrawRectangle(Pens.Black, tablaX + (4 * celdaAncho), filaY, celdaAncho, celdaAlto);
+                graphics.DrawString(item.Provider, font, Brushes.Black, tablaX + (4 * celdaAncho), filaY);
+
+                graphics.DrawRectangle(Pens.Black, tablaX + (5 * celdaAncho), filaY, celdaAncho, celdaAlto);
+                graphics.DrawString(item.Manufacturer, font, Brushes.Black, tablaX + (5 * celdaAncho), filaY);
+
+                graphics.DrawRectangle(Pens.Black, tablaX + (6 * celdaAncho), filaY, celdaAncho, celdaAlto);
+                graphics.DrawString(item.inStockCount.ToString(), font, Brushes.Black, tablaX + (6 * celdaAncho), filaY);
+
+                currentItemIndex++;
+                currentY += celdaAlto;
+            }
+
+            // Imprimir número de página
+            pageInfo = (currentPage+1) + " de " + totalPages;
+            pageX = e.PageBounds.Right - graphics.MeasureString(pageInfo, font).Width;
+            pageY = e.PageBounds.Bottom - lineHeight;
+            graphics.DrawString(pageInfo, font, Brushes.Black, pageX - 20, pageY - 20);
+
+            // Verificar si hay más páginas para imprimir
+
+            e.HasMorePages = false;
+           
+        }
+
+        // Método para configurar la impresión
+        public void ConfigurePrinting()
         {
             PrintDocument facturaPrintDocument = new PrintDocument();
             facturaPrintDocument.PrintPage += new PrintPageEventHandler(FacturaPrintPage);
@@ -94,64 +212,8 @@ namespace Inventario
                 printPreviewDialog.Document = facturaPrintDocument;
                 printPreviewDialog.ShowDialog();
             }
-
         }
 
-        private void FacturaPrintPage(object sender, PrintPageEventArgs e)
-        {
-            Graphics graphics = e.Graphics;
-            Font font = new Font("Arial", 12);
-
-            // Aquí puedes dibujar la factura en el objeto Graphics
-
-            // Ejemplo: Dibujar texto
-            string fecha = "08 de mayo de 2023";
-            string nombre = "Juan Pérez";
-
-            graphics.DrawString("Fecha: " + fecha, font, Brushes.Black, new PointF(100, 100));
-            graphics.DrawString("Nombre: " + nombre, font, Brushes.Black, new PointF(100, 120));
-
-            float tablaX = 100;
-            float tablaY = 200;
-            float celdaAncho = 110;
-            float celdaAlto = 20;
-
-            // Dibujar cabecera de la tabla
-            string[] cabecera = { "ID", "Nombre", "Precio", "Precio Venta", "Proveedor", "Fabricante" };
-
-            for (int i = 0; i < cabecera.Length; i++)
-            {
-                float celdaX = (tablaX + (i * celdaAncho));
-                graphics.DrawRectangle(Pens.Black, celdaX, tablaY, celdaAncho, celdaAlto);
-                graphics.DrawString(cabecera[i], new Font("Arial", 12, FontStyle.Bold), Brushes.Black, new PointF(celdaX, tablaY));
-            }
-
-            var ItemsList = Inventory.ItemsList;
-
-            // Dibujar datos de la tabla
-            for (int i = 0; i < ItemsList.Count; i++)
-            {
-                float filaY = (tablaY + ((i + 1) * celdaAlto));
-
-                graphics.DrawRectangle(Pens.Black, tablaX, filaY, celdaAncho, celdaAlto);
-                graphics.DrawString(ItemsList[i].ID, font, Brushes.Black, new PointF(tablaX, filaY));
-
-                graphics.DrawRectangle(Pens.Black, tablaX + celdaAncho, filaY, celdaAncho, celdaAlto);
-                graphics.DrawString(ItemsList[i].Name, font, Brushes.Black, new PointF(tablaX + celdaAncho, filaY));
-
-                graphics.DrawRectangle(Pens.Black, tablaX + (2 * celdaAncho), filaY, celdaAncho, celdaAlto);
-                graphics.DrawString(ItemsList[i].Price.ToString(), font, Brushes.Black, new PointF(tablaX + (2 * celdaAncho), filaY));
-
-                graphics.DrawRectangle(Pens.Black, tablaX + (3 * celdaAncho), filaY, celdaAncho, celdaAlto);
-                graphics.DrawString(ItemsList[i].SellPrice.ToString(), font, Brushes.Black, new PointF(tablaX + (3 * celdaAncho), filaY));
-
-                graphics.DrawRectangle(Pens.Black, tablaX + (4 * celdaAncho), filaY, celdaAncho, celdaAlto);
-                graphics.DrawString(ItemsList[i].Provider, font, Brushes.Black, new PointF(tablaX + (4 * celdaAncho), filaY));
-
-                graphics.DrawRectangle(Pens.Black, tablaX + (5 * celdaAncho), filaY, celdaAncho, celdaAlto);
-                graphics.DrawString(ItemsList[i].Manufacturer, font, Brushes.Black, new PointF(tablaX + (5 * celdaAncho), filaY));
-            }
-        }
 
         public void UpdateItem(Item myItem, int row)
         {
