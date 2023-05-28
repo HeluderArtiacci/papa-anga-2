@@ -83,6 +83,16 @@ namespace Inventario.Properties {
         /// <summary>
         ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
         /// </summary>
+        public static System.Drawing.Bitmap Entrada1 {
+            get {
+                object obj = ResourceManager.GetObject("Entrada1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
         public static System.Drawing.Bitmap Entrada2 {
             get {
                 object obj = ResourceManager.GetObject("Entrada2", resourceCulture);
@@ -116,6 +126,16 @@ namespace Inventario.Properties {
         public static System.IO.UnmanagedMemoryStream nose {
             get {
                 return ResourceManager.GetStream("nose", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Busca un recurso adaptado de tipo System.Drawing.Bitmap.
+        /// </summary>
+        public static System.Drawing.Bitmap Salida1 {
+            get {
+                object obj = ResourceManager.GetObject("Salida1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
             }
         }
         

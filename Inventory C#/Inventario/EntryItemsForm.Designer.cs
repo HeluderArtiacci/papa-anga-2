@@ -282,6 +282,7 @@
             this.EntryDate.ShowToday = false;
             this.EntryDate.ShowTodayCircle = false;
             this.EntryDate.TabIndex = 37;
+            this.EntryDate.DateChanged += new System.Windows.Forms.DateRangeEventHandler(this.EntryDate_DateChanged);
             // 
             // productCount
             // 

@@ -15,6 +15,7 @@ namespace Inventario
 {
     public partial class Inventory : Form
     {
+        public static DataBase MyDataBase = new DataBase();
 
         public static Dictionary<string, Item> ItemsListDic = new Dictionary<string, Item>();
 
@@ -38,7 +39,8 @@ namespace Inventario
             }
             else
             {
-                ItemsList = new BindingList<Item>(TestList());
+                //ItemsList = new BindingList<Item>(TestList());
+                SaveDataBase();
             }
 
         }
@@ -57,24 +59,27 @@ namespace Inventario
             var retList = new List<Item>();
             retList.Add(new Item()
             {
-                ID = "",
+                ID = "DONARA25",
                 Name = "Dorilocos",
                 Manufacturer = "Navis",
                 Provider = "rascct",
                 Description = "adsdda",
                 Price = (float)1.5,
-                SellPrice = 1.75f
-            });
+                SellPrice = 1.75f,
+                inStockCount = (int)GenerateRandomFloat(1, 50)
+
+            }); ;
 
             retList.Add(new Item()
             {
-                ID = "",
+                ID = "PEREYA14",
                 Name = "Pesi",
                 Manufacturer = "Resvis",
                 Provider = "Yascct",
                 Description = "qwerts",
                 Price = (float)0.5,
-                SellPrice = 0.75f
+                SellPrice = 0.75f,
+                inStockCount = (int)GenerateRandomFloat(1, 50)
             });
 
             for (int i = 0; i < 100; i++)
@@ -88,6 +93,7 @@ namespace Inventario
                 item.Description = GenerateRandomString(30);
                 item.Price = GenerateRandomFloat(0.5f, 10f);
                 item.SellPrice = GenerateRandomFloat(item.Price, 12f);
+                item.inStockCount = (int)GenerateRandomFloat(1, 50);
 
                 // Generar y asignar la ID
                 item.ID = EditWindow.GenerateID(item);
@@ -114,14 +120,18 @@ namespace Inventario
         public static void SaveDataBase()
         {
 
+            MyDataBase.EntriesData = EntriesData ;
+            MyDataBase.ExitsData = ExitsData;
+            MyDataBase.ItemsList = ItemsList;
+
             // Serializar la lista en un archivo binario
             using (FileStream fs = new FileStream("database.bin", FileMode.Create))
             {
                 BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(fs, ItemsList);
+                formatter.Serialize(fs, MyDataBase);
             }
 
-            MessageBox.Show("Datos guardados correctamente.", "Sistema de Datos");
+            LoadDataBase();
         }
 
         public static Item GetItem(string id)
@@ -138,12 +148,16 @@ namespace Inventario
 
         public static int GetItemCount(string id)
         {
-            return GetItem(id).inStockCount;
+            if (GetItem(id) != null)
+                return GetItem(id).inStockCount;
+            else
+                return 0;
         }
-        public static Item SetItemCount(string id, int Count)
+        public static void SetItemCount(string id, int Count)
         {
-            ItemsList[ItemsList.IndexOf(GetItem(id))].inStockCount = Count;
-            return ItemsList[ItemsList.IndexOf(GetItem(id))];
+            if(GetItem(id) != null)
+                ItemsList[ItemsList.IndexOf(GetItem(id))].inStockCount = Count;
+
         }
 
         public static void LoadDataBase()
@@ -154,13 +168,16 @@ namespace Inventario
                 try
                 {
                     BinaryFormatter formatter = new BinaryFormatter();
-                    ItemsList = (BindingList<Item>)formatter.Deserialize(fs);
+                    MyDataBase = (DataBase)formatter.Deserialize(fs);
                 }
                 catch {
                     MessageBox.Show("Los datos no pudieron ser cargados."); return; }
+
+                EntriesData = MyDataBase.EntriesData;
+                ExitsData = MyDataBase.ExitsData;
+                ItemsList = MyDataBase.ItemsList;
             }
             UpdateDictionary();
-            MessageBox.Show("Datos cargados correctamente.", "Sistema de Datos");
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -257,8 +274,15 @@ namespace Inventario
 
         private void BT_CheckIn_Click(object sender, EventArgs e)
         {
-
             DisposeOthers();
+            if (ItemsForm == null)
+            {
+                ItemsForm = new BillingForm() { TopLevel = false, TopMost = true };
+                ItemsForm.FormBorderStyle = FormBorderStyle.None;
+                ChildFormPanel.Controls.Add(ItemsForm);
+                ItemsForm.Show();
+            }
+            else { MessageBox.Show("Already  created!"); }
         }
     }
 }

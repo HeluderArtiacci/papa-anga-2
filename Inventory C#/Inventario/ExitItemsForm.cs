@@ -14,6 +14,7 @@ namespace Inventario
 {
     public partial class ExitItemsForm : Form
     {
+
         Dictionary<string, string> ItemsList = new Dictionary<string, string>();
         List<string> ItemsdropDownList = new List<string>();
         List<string> EntriesdropDownList = new List<string>();
@@ -106,7 +107,7 @@ namespace Inventario
                                 dataView.Rows[newItem].Cells[2].Value = myitem.Price;
                                 dataView.Rows[newItem].Cells[3].Value = myitem.SellPrice;
                                 dataView.Rows[newItem].Cells[4].Value = item.Count;
-                                dataView.Rows[newItem].Cells[5].Value = myitem.Price * item.Count;
+                                dataView.Rows[newItem].Cells[5].Value = myitem.SellPrice * item.Count;
                                 Total += myitem.SellPrice * item.Count;
                             }
                         }
@@ -144,6 +145,7 @@ namespace Inventario
             else
                 itemPicture.Image = Resources.missingImage;
 
+            
             stockLabel.Text = currentItem.inStockCount.ToString();
             nameLabel.Text = currentItem.Name;
             itemCode.Text = currentItem.ID;
@@ -244,6 +246,14 @@ namespace Inventario
                     CheckStock();
                 }
             }
+
+            if (selectedItem != null)
+            {
+                var Subtotal = (selectedItem.SellPrice * (int)productCount.Value);
+                CheckStock();
+                SubTotalLabel.Text = "$ " + String.Format("{0:0.00}", Subtotal);
+            }
+
         }
 
         private void ExitNameFill_TextChanged(object sender, EventArgs e)
@@ -252,12 +262,9 @@ namespace Inventario
             {
                 newExit.Name = ExitNameFill.Text;
                 newExit.clientName = clientNameFill.Text;
-                newExit.date = ExitDate.SelectionStart;
                 newExit.clientAddress = addresClientFill.Text;
                 newExit.clientDNI = DNIclientFill.Text;
-
                 ExitNameLabel.Text = ExitNameFill.Text;
-
             }
         }
 
@@ -265,10 +272,16 @@ namespace Inventario
         {
             if (newExit != null)
             {
-                if (newExit.Items.Count < 1)
+                if (newExit.Items.Count >= 1)
                 {
                     MessageBox.Show("Entrada registrada!");
                     Inventory.ExitsData.Add(newExit);
+                    foreach (ExitItem item in newExit.Items)
+                    {
+                        int currentCount = Inventory.GetItemCount(item.ItemID);
+                        Inventory.SetItemCount(item.ItemID, currentCount - item.Count);
+                    }
+                    newExit = null;
 
                     EditPanel.Enabled = false;
                     dataView.Rows.Clear();
@@ -283,14 +296,9 @@ namespace Inventario
                     clientNameFill.Text = "";
                     DNIclientFill.Text = "";
                     addresClientFill.Text = "";
-                    ExitDate.SelectionStart = DateTime.Now;
+                    Inventory.SaveDataBase();
 
-                    foreach (ExitItem item in newExit.Items)
-                    {
-                        int currentCount = Inventory.GetItemCount(item.ItemID);
-                        Inventory.SetItemCount(item.ItemID, currentCount - item.Count);
-                    }
-                    newExit = null;
+
                 }
                 else
                 {
@@ -312,7 +320,7 @@ namespace Inventario
         {
             if (selectedItem != null)
             {
-                var Subtotal = (selectedItem.Price * (int)productCount.Value);
+                var Subtotal = (selectedItem.SellPrice * (int)productCount.Value);
                 CheckStock();
                 SubTotalLabel.Text = "$ " + String.Format("{0:0.00}", Subtotal);
             }
@@ -333,6 +341,21 @@ namespace Inventario
                 stockLabel.ForeColor = Color.Black;
                 stockLabelName.ForeColor = Color.Black;
                 CanAdd = true;
+            }
+        }
+
+        private void ExitDate_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            try
+            {
+                if (newExit != null)
+                {
+                    newExit.date = ExitDate.SelectionStart;
+                }
+            }
+            catch(Exception a)
+            {
+                MessageBox.Show(a.Message);
             }
         }
     }

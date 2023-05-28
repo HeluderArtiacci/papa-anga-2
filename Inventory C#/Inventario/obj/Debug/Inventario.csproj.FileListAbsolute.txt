@@ -14,3 +14,4 @@ D:\Projects\ELCI\papa-anga-2\Inventory C#\Inventario\obj\Debug\Inventario.EntryI
 D:\Projects\ELCI\papa-anga-2\Inventory C#\Inventario\obj\Debug\Inventario.BillingForm.resources
 D:\Projects\ELCI\papa-anga-2\Inventory C#\Inventario\obj\Debug\Inventario.ExitItemsForm.resources
 D:\Projects\ELCI\papa-anga-2\Inventory C#\Inventario\obj\Debug\Inventario.LoadingForm.resources
+D:\Projects\ELCI\papa-anga-2\Inventory C#\Inventario\obj\Debug\Inventario.ItemControlForm.resources

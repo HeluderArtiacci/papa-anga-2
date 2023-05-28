@@ -17,6 +17,7 @@ namespace Inventario
         List<string> EntriesdropDownList = new List<string>();
         private int currentData;
         private int currentItem = -1;
+        public string EntryName = "";
 
         Item selectedItem = null; 
         private EntryData newEntry = null;
@@ -35,6 +36,7 @@ namespace Inventario
                 ItemsdropDownList.Add(itemData);
                 itemsDropDown.Items.Add(itemData);
             }
+
             dataView.Columns.Add("Code", "ID");
             dataView.Columns.Add("Name", "Nombre");
             dataView.Columns.Add("Price", "Precio");
@@ -80,7 +82,6 @@ namespace Inventario
                 currentData = Inventory.EntriesData.IndexOf(data);
                 entryNameFill.Text = data.Name;
                 EntryDate.SetDate(data.date);
-
                 dataView.Rows.Clear();
                 float Total = 0;
                 if (data.Items != null)
@@ -228,15 +229,22 @@ namespace Inventario
                     currentItem = index;
                 }
             }
+
+            if (selectedItem != null)
+            {
+                var Subtotal = (selectedItem.Price * (int)productCount.Value);
+                subtotalLabel.Text = "$ " + String.Format("{0:0.00}", Subtotal);
+            }
         }
 
         private void entryNameFill_TextChanged(object sender, EventArgs e)
         {
             if(newEntry != null)
             {
-                newEntry.Name = entryNameFill.Text;
+                EntryName = entryNameFill.Text;
+                newEntry.Name = EntryName;
                 EntryNameLabel.Text = entryNameFill.Text;
-                newEntry.date = EntryDate.SelectionStart;
+                
             }
         }
 
@@ -244,10 +252,20 @@ namespace Inventario
         {
             if (newEntry != null)
             {
-                if (newEntry.Items.Count < 1)
+                if (newEntry.Items.Count >= 1)
                 {
                     MessageBox.Show("Entrada registrada!");
+                    newEntry.Name = EntryName;
                     Inventory.EntriesData.Add(newEntry);
+                    foreach (EntryItem item in newEntry.Items)
+                    {
+                        int currentCount = Inventory.GetItemCount(item.ItemID);
+                        Inventory.SetItemCount(item.ItemID, currentCount + item.Count);
+                    }
+                    Inventory.SaveDataBase();
+
+                    newEntry = null;
+
 
                     EditPanel.Enabled = false;
                     dataView.Rows.Clear();
@@ -256,15 +274,7 @@ namespace Inventario
                     TotalLabel.Text = "$ 0";
                     SetItemPreview(new Item());
                     itemsDropDown.TabIndex = 0;
-                    productCount.Value = 1;
-
-
-                    foreach (EntryItem item in newEntry.Items)
-                    {
-                        int currentCount = Inventory.GetItemCount(item.ItemID);
-                        Inventory.SetItemCount(item.ItemID, currentCount + item.Count);
-                    }
-                    newEntry = null;
+                    productCount.Value = 1;                    
                 }
                 else
                 {
@@ -283,6 +293,14 @@ namespace Inventario
                 var Subtotal = (selectedItem.Price * (int)productCount.Value);
 
                 subtotalLabel.Text = "$ " + String.Format("{0:0.00}", Subtotal);
+            }
+        }
+
+        private void EntryDate_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            if (newEntry != null)
+            {
+                newEntry.date = EntryDate.SelectionStart;
             }
         }
     }

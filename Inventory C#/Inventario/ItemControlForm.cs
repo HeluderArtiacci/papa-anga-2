@@ -14,29 +14,7 @@ using System.Windows.Forms;
 
 namespace Inventario
 {
-    public class LoadingForm : Form
-    {
-        private Label loadingLabel;
 
-        public LoadingForm(string loadingText)
-        {
-            Text = "Cargando...";
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            StartPosition = FormStartPosition.CenterScreen;
-            ShowInTaskbar = false;
-            ControlBox = false;
-            MaximizeBox = false;
-            MinimizeBox = false;
-            Size = new Size(200, 100);
-
-            loadingLabel = new Label();
-            loadingLabel.Text = loadingText;
-            loadingLabel.AutoSize = false;
-            loadingLabel.TextAlign = ContentAlignment.MiddleCenter;
-            loadingLabel.Dock = DockStyle.Fill;
-            Controls.Add(loadingLabel);
-        }
-    }
 
     public partial class ItemControlForm : Form
     {
@@ -98,10 +76,6 @@ namespace Inventario
             Font font = new Font("Arial", 12);
             float lineHeight = font.GetHeight();
 
-            // Obtener los datos de la factura
-            string fecha = "08 de mayo de 2023";
-            string nombre = "Juan Pérez";
-
             float startX = 70;
             float startY = 100;
             float currentY = startY;
@@ -109,9 +83,7 @@ namespace Inventario
             // Imprimir encabezado solo en la primera página
             if (currentPage == 0)
             {
-                graphics.DrawString("Fecha: " + fecha, font, Brushes.Black, startX, currentY);
-                currentY += lineHeight;
-                graphics.DrawString("Nombre: " + nombre, font, Brushes.Black, startX, currentY);
+                graphics.DrawString("Fecha de impresion: " + DateTime.Now, font, Brushes.Black, startX, currentY);
                 currentY += lineHeight * 2;
             }
 

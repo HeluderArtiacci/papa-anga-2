@@ -16,13 +16,14 @@ namespace Inventario
     {
         public BindingList<Item> ItemsList = new BindingList<Item>();
         public BindingList<EntryData> EntriesData = new BindingList<EntryData>();
+        public BindingList<ExitData> ExitsData = new BindingList<ExitData>();
     }
 
     [Serializable]
     public class EntryData
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public string Id = Inventory.GenerateRandomString(10);
+        public string Name;
         public DateTime date { get; set; }
         public BindingList<EntryItem> Items = new BindingList<EntryItem>();
 
@@ -43,7 +44,7 @@ namespace Inventario
     [Serializable]
     public class ExitData
     {
-        public int Id { get; set; }
+        public string Id = Inventory.GenerateRandomString(10);
         public string Name { get; set; }
         public DateTime date { get; set; }
         public string clientName;
