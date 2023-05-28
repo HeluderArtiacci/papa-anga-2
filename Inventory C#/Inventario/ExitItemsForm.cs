@@ -1,31 +1,33 @@
 ﻿using Inventario.Properties;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Reflection;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Inventario
 {
-    public partial class EntryItemsForm : Form
+    public partial class ExitItemsForm : Form
     {
         Dictionary<string, string> ItemsList = new Dictionary<string, string>();
-        List<string> ItemsdropDownList = new List<string> ();
+        List<string> ItemsdropDownList = new List<string>();
         List<string> EntriesdropDownList = new List<string>();
         private int currentData;
-        private int currentItem = -1;
-
-        Item selectedItem = null; 
-        private EntryData newEntry = null;
-        public EntryItemsForm()
+        private int currentItem;
+        private ExitData newExit = null;
+        public bool CanAdd = true;
+        public Item selectedItem;
+        public ExitItemsForm()
         {
             InitializeComponent();
         }
 
-        private void EntryItemsForm_Load(object sender, EventArgs e)
+        private void ExitItems_Load(object sender, EventArgs e)
         {
 
             foreach (Item myitem in Inventory.ItemsList)
@@ -63,29 +65,36 @@ namespace Inventario
             EntriesdropDownList = new List<string>();
             entriesDropDown.Items.Clear();
 
-            foreach (EntryData entry in Inventory.EntriesData)
+            foreach (ExitData Exit in Inventory.EntriesData)
             {
-                var entrieData = $"[{entry.Id}] | {entry.Name} | {entry.date}";
+                var entrieData = $"[{Exit.Id}] | {Exit.Name} | {Exit.date}";
                 EntriesdropDownList.Add(entrieData);
                 entriesDropDown.Items.Add(entrieData);
             }
         }*/
 
-        public void SetDataView(EntryData data)
+        public void ResetEditMenu()
+        {
+
+            ExitNameLabel.Text = "";
+            ExitNameFill.Text = "";
+            TotalLabel.Text = "$ 0";
+            SetItemPreview(new Item());
+        }
+        public void SetDataView(ExitData data)
         {
             if (data != null)
             {
-                EntryNameLabel.Text = data.Name;
+                ExitNameLabel.Text = data.Name;
                 EditPanel.Enabled = true;
-                currentData = Inventory.EntriesData.IndexOf(data);
-                entryNameFill.Text = data.Name;
-                EntryDate.SetDate(data.date);
-
+                currentData = Inventory.ExitsData.IndexOf(data);
+                ExitNameFill.Text = data.Name;
+                ExitDate.SetDate(data.date);
                 dataView.Rows.Clear();
                 float Total = 0;
                 if (data.Items != null)
                 {
-                    foreach (EntryItem item in data.Items)
+                    foreach (ExitItem item in data.Items)
                     {
                         var newItem = dataView.Rows.Add();
                         foreach (Item myitem in Inventory.ItemsList)
@@ -98,17 +107,17 @@ namespace Inventario
                                 dataView.Rows[newItem].Cells[3].Value = myitem.SellPrice;
                                 dataView.Rows[newItem].Cells[4].Value = item.Count;
                                 dataView.Rows[newItem].Cells[5].Value = myitem.Price * item.Count;
-                                Total += myitem.Price * item.Count;
+                                Total += myitem.SellPrice * item.Count;
                             }
                         }
                     }
-                    TotalLabel.Text = "$ " + String.Format("{0:0.00}",Total);
+                    TotalLabel.Text = "$ " + String.Format("{0:0.00}", Total);
                 }
             }
             else
             {
                 EditPanel.Enabled = false;
-                entryNameFill.Text = "";
+                ExitNameFill.Text = "";
                 dataView.Rows.Clear();
                 TotalLabel.Text = "$ 0";
             }
@@ -134,24 +143,22 @@ namespace Inventario
             }
             else
                 itemPicture.Image = Resources.missingImage;
+
             stockLabel.Text = currentItem.inStockCount.ToString();
-            selectedItem = currentItem;
             nameLabel.Text = currentItem.Name;
             itemCode.Text = currentItem.ID;
-            priceLabel.Text = $"${currentItem.Price}";
             sellPriceLabel.Text = $"${currentItem.SellPrice}";
-            productCount.Value = 1;
         }
 
 
-        private void BT_NewEntry_Click(object sender, EventArgs e)
+        private void BT_NewExit_Click(object sender, EventArgs e)
         {
-            if (newEntry == null)
+            if (newExit == null)
             {
-                newEntry = new EntryData();
-                newEntry.date = DateTime.Today;
-                newEntry.Name = "NewEntry_" + Inventory.EntriesData.Count.ToString();
-                SetDataView(newEntry);
+                newExit = new ExitData();
+                newExit.date = DateTime.Today;
+                newExit.Name = "NewSell_" + Inventory.ExitsData.Count.ToString();
+                SetDataView(newExit);
                 TotalLabel.Text = "$ 0";
                 SetItemPreview(new Item());
                 itemsDropDown.TabIndex = 0;
@@ -162,10 +169,10 @@ namespace Inventario
                 DialogResult dialogResult = MessageBox.Show("¿Desea Descartar y crear un nuevo registro de entrada?", "Confirmar operacion.", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    newEntry = new EntryData();
-                    newEntry.date = DateTime.Today;
-                    newEntry.Name = "NewEntry_" + Inventory.EntriesData.Count.ToString();
-                    SetDataView(newEntry);
+                    newExit = new ExitData();
+                    newExit.date = DateTime.Today;
+                    newExit.Name = "NewSell_" + Inventory.ExitsData.Count.ToString();
+                    SetDataView(newExit);
                     TotalLabel.Text = "$ 0";
                     SetItemPreview(new Item());
                     itemsDropDown.TabIndex = 0;
@@ -176,6 +183,7 @@ namespace Inventario
                     //do something else
                 }
             }
+
 
         }
         /*
@@ -189,10 +197,15 @@ namespace Inventario
 
         private void BT_AddProduct_Click(object sender, EventArgs e)
         {
-            if (itemsDropDown.SelectedIndex != -1 && currentItem != -1)
+            if (itemsDropDown.SelectedIndex != -1 && currentItem != -1 && CanAdd)
             {
-                newEntry.Items.Add(new EntryItem(Inventory.ItemsList[currentItem].ID, (int)productCount.Value));
-                SetDataView(newEntry);
+                newExit.Items.Add(new ExitItem(Inventory.ItemsList[currentItem].ID, (int)productCount.Value));
+                SetDataView(newExit);
+                SetItemPreview(selectedItem);
+            }
+            else
+            {
+                System.Media.SystemSounds.Hand.Play();
             }
         }
 
@@ -225,46 +238,59 @@ namespace Inventario
                 {
                     var index = ItemsdropDownList.IndexOf(check);
                     SetItemPreview(Inventory.ItemsList[index]);
+                    selectedItem = Inventory.ItemsList[index];
+                    productCount.Value = 1;
                     currentItem = index;
+                    CheckStock();
                 }
             }
         }
 
-        private void entryNameFill_TextChanged(object sender, EventArgs e)
+        private void ExitNameFill_TextChanged(object sender, EventArgs e)
         {
-            if(newEntry != null)
+            if (newExit != null)
             {
-                newEntry.Name = entryNameFill.Text;
-                EntryNameLabel.Text = entryNameFill.Text;
-                newEntry.date = EntryDate.SelectionStart;
+                newExit.Name = ExitNameFill.Text;
+                newExit.clientName = clientNameFill.Text;
+                newExit.date = ExitDate.SelectionStart;
+                newExit.clientAddress = addresClientFill.Text;
+                newExit.clientDNI = DNIclientFill.Text;
+
+                ExitNameLabel.Text = ExitNameFill.Text;
+
             }
         }
 
-        private void BT_saveEntry_Click(object sender, EventArgs e)
+        private void BT_saveExit_Click(object sender, EventArgs e)
         {
-            if (newEntry != null)
+            if (newExit != null)
             {
-                if (newEntry.Items.Count < 1)
+                if (newExit.Items.Count < 1)
                 {
                     MessageBox.Show("Entrada registrada!");
-                    Inventory.EntriesData.Add(newEntry);
+                    Inventory.ExitsData.Add(newExit);
 
                     EditPanel.Enabled = false;
                     dataView.Rows.Clear();
-                    EntryNameLabel.Text = "";
-                    entryNameFill.Text = "";
+                    ExitNameLabel.Text = "";
+                    ExitNameFill.Text = "";
                     TotalLabel.Text = "$ 0";
                     SetItemPreview(new Item());
-                    itemsDropDown.TabIndex = 0;
+                    itemsDropDown.Text = "";
+                    itemsDropDown.SelectedIndex = -1;
                     productCount.Value = 1;
+                    productCount.ForeColor = Color.Black;
+                    clientNameFill.Text = "";
+                    DNIclientFill.Text = "";
+                    addresClientFill.Text = "";
+                    ExitDate.SelectionStart = DateTime.Now;
 
-
-                    foreach (EntryItem item in newEntry.Items)
+                    foreach (ExitItem item in newExit.Items)
                     {
                         int currentCount = Inventory.GetItemCount(item.ItemID);
-                        Inventory.SetItemCount(item.ItemID, currentCount + item.Count);
+                        Inventory.SetItemCount(item.ItemID, currentCount - item.Count);
                     }
-                    newEntry = null;
+                    newExit = null;
                 }
                 else
                 {
@@ -277,12 +303,36 @@ namespace Inventario
             }
         }
 
+        private void stockLabel_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private void productCount_ValueChanged(object sender, EventArgs e)
         {
-            if (selectedItem != null) {
+            if (selectedItem != null)
+            {
                 var Subtotal = (selectedItem.Price * (int)productCount.Value);
+                CheckStock();
+                SubTotalLabel.Text = "$ " + String.Format("{0:0.00}", Subtotal);
+            }
+        }
 
-                subtotalLabel.Text = "$ " + String.Format("{0:0.00}", Subtotal);
+        public void CheckStock()
+        {
+            if (productCount.Value > selectedItem.inStockCount)
+            {
+                productCount.ForeColor = Color.Red;
+                stockLabel.ForeColor = Color.Red;
+                stockLabelName.ForeColor = Color.Red;
+                CanAdd = false;
+            }
+            else
+            {
+                productCount.ForeColor = Color.Black;
+                stockLabel.ForeColor = Color.Black;
+                stockLabelName.ForeColor = Color.Black;
+                CanAdd = true;
             }
         }
     }

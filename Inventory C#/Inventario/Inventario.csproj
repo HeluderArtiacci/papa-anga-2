@@ -46,11 +46,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BillingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BillingForm.Designer.cs">
+      <DependentUpon>BillingForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="EntryItemsForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="EntryItemsForm.Designer.cs">
       <DependentUpon>EntryItemsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ExitItemsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExitItemsForm.Designer.cs">
+      <DependentUpon>ExitItemsForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ItemClass.cs" />
     <Compile Include="Inventory.cs">
@@ -73,8 +85,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BillingForm.resx">
+      <DependentUpon>BillingForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="EntryItemsForm.resx">
       <DependentUpon>EntryItemsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExitItemsForm.resx">
+      <DependentUpon>ExitItemsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Inventory.resx">
       <DependentUpon>Inventory.cs</DependentUpon>

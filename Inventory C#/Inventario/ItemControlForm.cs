@@ -8,14 +8,42 @@ using System.Drawing.Printing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Inventario
 {
+    public class LoadingForm : Form
+    {
+        private Label loadingLabel;
+
+        public LoadingForm(string loadingText)
+        {
+            Text = "Cargando...";
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            StartPosition = FormStartPosition.CenterScreen;
+            ShowInTaskbar = false;
+            ControlBox = false;
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Size = new Size(200, 100);
+
+            loadingLabel = new Label();
+            loadingLabel.Text = loadingText;
+            loadingLabel.AutoSize = false;
+            loadingLabel.TextAlign = ContentAlignment.MiddleCenter;
+            loadingLabel.Dock = DockStyle.Fill;
+            Controls.Add(loadingLabel);
+        }
+    }
+
     public partial class ItemControlForm : Form
     {
         public int currentRow;
+        private Thread loadingThread;
+        private LoadingForm loadingForm;
+
         public ItemControlForm()
         {
             InitializeComponent();
@@ -23,10 +51,21 @@ namespace Inventario
 
         private void ItemControlForm_Load(object sender, EventArgs e)
         {
-            
+            loadingForm = new LoadingForm("Cargando datos de productos.");
+            loadingThread = new Thread(ShowLoadingForm);
+            loadingThread.Start();
+                
             dataView.DataSource = Inventory.ItemsList;
             dataView.CellFormatting += dataView_CellFormatting;
             dataView.ClearSelection();
+
+            loadingForm.Invoke(new Action(() => loadingForm.Close()));
+            loadingThread.Join();
+        }
+
+        private void ShowLoadingForm()
+        {
+            Application.Run(loadingForm);
         }
 
         private void dataView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -255,6 +294,8 @@ namespace Inventario
                     File.Copy(currentItem.IconPath, tempImagePath, true);
                     itemPicture.Image = Image.FromFile(tempImagePath);
                 }
+                else
+                    itemPicture.Image = Resources.missingImage;
             }
             else
                 itemPicture.Image = Resources.missingImage;
@@ -265,6 +306,7 @@ namespace Inventario
             manuLabel.Text = $"{currentItem.Manufacturer}";
             provLabel.Text = currentItem.Provider;
             DescTextBox.Text = currentItem.Description;
+            stockLabel.Text = currentItem.inStockCount.ToString();
         }
     }
 }

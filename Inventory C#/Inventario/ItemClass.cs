@@ -39,6 +39,32 @@ namespace Inventario
             Count = count;
         }
     }
+
+    [Serializable]
+    public class ExitData
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public DateTime date { get; set; }
+        public string clientName;
+        public string clientDNI; 
+        public string clientAddress;
+        public BindingList<ExitItem> Items = new BindingList<ExitItem>();
+
+    }
+    [Serializable]
+    public class ExitItem
+    {
+        public string ItemID { get; set; }
+        public int Count { get; set; }
+
+        public ExitItem(string itemID, int count)
+        {
+            ItemID = itemID;
+            Count = count;
+        }
+    }
+
     [Serializable]
     public class Item : INotifyPropertyChanged
     {

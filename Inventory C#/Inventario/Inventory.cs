@@ -15,13 +15,16 @@ namespace Inventario
 {
     public partial class Inventory : Form
     {
+
+        public static Dictionary<string, Item> ItemsListDic = new Dictionary<string, Item>();
+
         private SoundPlayer soundPlayer;
 
         public Form ItemsForm = null;
 
         public static BindingList<Item> ItemsList = new BindingList<Item>(); 
         public static BindingList<EntryData> EntriesData = new BindingList<EntryData>();
-
+        public static BindingList<ExitData> ExitsData = new BindingList<ExitData>();
         static Random random = new Random();
         public Inventory()
         {
@@ -32,7 +35,6 @@ namespace Inventario
             {
                 // Cargar los datos guardados
                 LoadDataBase();
-
             }
             else
             {
@@ -41,8 +43,14 @@ namespace Inventario
 
         }
 
-       
-
+        public static void UpdateDictionary()
+        {
+            ItemsListDic = new Dictionary<string, Item>();
+            foreach (Item myitem in ItemsList)
+            {
+                ItemsListDic[myitem.ID] = myitem;
+            }
+        }
 
         public List<Item> TestList()
         {
@@ -113,7 +121,29 @@ namespace Inventario
                 formatter.Serialize(fs, ItemsList);
             }
 
-            MessageBox.Show("Datos guardados correctamente.");
+            MessageBox.Show("Datos guardados correctamente.", "Sistema de Datos");
+        }
+
+        public static Item GetItem(string id)
+        {
+            try
+            {
+                return ItemsListDic[id];
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public static int GetItemCount(string id)
+        {
+            return GetItem(id).inStockCount;
+        }
+        public static Item SetItemCount(string id, int Count)
+        {
+            ItemsList[ItemsList.IndexOf(GetItem(id))].inStockCount = Count;
+            return ItemsList[ItemsList.IndexOf(GetItem(id))];
         }
 
         public static void LoadDataBase()
@@ -129,8 +159,8 @@ namespace Inventario
                 catch {
                     MessageBox.Show("Los datos no pudieron ser cargados."); return; }
             }
-
-            MessageBox.Show("Datos cargados correctamente.");
+            UpdateDictionary();
+            MessageBox.Show("Datos cargados correctamente.", "Sistema de Datos");
         }
 
         private void groupBox1_Enter(object sender, EventArgs e)
@@ -197,7 +227,15 @@ namespace Inventario
 
         private void BT_ExitItems_Click(object sender, EventArgs e)
         {
-            
+            DisposeOthers();
+            if (ItemsForm == null)
+            {
+                ItemsForm = new ExitItemsForm() { TopLevel = false, TopMost = true };
+                ItemsForm.FormBorderStyle = FormBorderStyle.None;
+                ChildFormPanel.Controls.Add(ItemsForm);
+                ItemsForm.Show();
+            }
+            else { MessageBox.Show("Already  created!"); }
         }
 
         void DisposeOthers()

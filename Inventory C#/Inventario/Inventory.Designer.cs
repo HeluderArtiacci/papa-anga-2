@@ -28,12 +28,13 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Inventory));
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-            this.ChildFormPanel = new System.Windows.Forms.Panel();
             this.BT_Items = new System.Windows.Forms.Button();
             this.BT_EntryItems = new System.Windows.Forms.Button();
             this.BT_ExitItems = new System.Windows.Forms.Button();
             this.BT_CheckIn = new System.Windows.Forms.Button();
+            this.ChildFormPanel = new System.Windows.Forms.Panel();
             this.flowLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -55,15 +56,6 @@
             this.flowLayoutPanel1.Size = new System.Drawing.Size(1059, 85);
             this.flowLayoutPanel1.TabIndex = 3;
             this.flowLayoutPanel1.TabStop = true;
-            // 
-            // ChildFormPanel
-            // 
-            this.ChildFormPanel.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ChildFormPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.ChildFormPanel.Location = new System.Drawing.Point(5, 91);
-            this.ChildFormPanel.Name = "ChildFormPanel";
-            this.ChildFormPanel.Size = new System.Drawing.Size(1050, 615);
-            this.ChildFormPanel.TabIndex = 4;
             // 
             // BT_Items
             // 
@@ -114,6 +106,15 @@
             this.BT_CheckIn.UseVisualStyleBackColor = true;
             this.BT_CheckIn.Click += new System.EventHandler(this.BT_CheckIn_Click);
             // 
+            // ChildFormPanel
+            // 
+            this.ChildFormPanel.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.ChildFormPanel.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.ChildFormPanel.Location = new System.Drawing.Point(5, 91);
+            this.ChildFormPanel.Name = "ChildFormPanel";
+            this.ChildFormPanel.Size = new System.Drawing.Size(1050, 615);
+            this.ChildFormPanel.TabIndex = 4;
+            // 
             // Inventory
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -122,10 +123,11 @@
             this.Controls.Add(this.ChildFormPanel);
             this.Controls.Add(this.flowLayoutPanel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Inventory";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Form1";
+            this.Text = "Sistema de inventario";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Inventory_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.flowLayoutPanel1.ResumeLayout(false);
