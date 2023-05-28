@@ -142,9 +142,9 @@
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.label10.Location = new System.Drawing.Point(715, 407);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(120, 25);
+            this.label10.Size = new System.Drawing.Size(164, 25);
             this.label10.TabIndex = 14;
-            this.label10.Text = "Descripcion:";
+            this.label10.Text = "Especificaciones:";
             // 
             // sellPriceLabel
             // 

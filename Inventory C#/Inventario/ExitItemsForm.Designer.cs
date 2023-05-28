@@ -428,6 +428,7 @@
             this.BT_cancelEntry.TabIndex = 5;
             this.BT_cancelEntry.Text = "Cancelar";
             this.BT_cancelEntry.UseVisualStyleBackColor = true;
+            this.BT_cancelEntry.Click += new System.EventHandler(this.BT_cancelEntry_Click);
             // 
             // BT_saveExit
             // 

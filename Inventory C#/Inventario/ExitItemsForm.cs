@@ -358,5 +358,30 @@ namespace Inventario
                 MessageBox.Show(a.Message);
             }
         }
+
+        private void BT_cancelEntry_Click(object sender, EventArgs e)
+        {
+            if (newExit != null)
+            {
+                DialogResult dialogResult = MessageBox.Show("¿Desea descartar el registro de venta?", "Confirmar operacion.", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    newExit = null;
+                    SetDataView(newExit);
+                    TotalLabel.Text = "$ 0";
+                    SetItemPreview(new Item());
+                    itemsDropDown.SelectedIndex = -1;
+                    itemsDropDown.TabIndex = 0;
+                    itemsDropDown.Text = "";
+                    productCount.Value = 1;
+                    ExitNameLabel.Text = "";
+                    SubTotalLabel.Text = "";
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    //do something else
+                }
+            }
+        }
     }
 }

@@ -32,7 +32,7 @@
             this.EditPanel = new System.Windows.Forms.Panel();
             this.filterItems = new System.Windows.Forms.TextBox();
             this.itemCode = new System.Windows.Forms.Label();
-            this.subtotalLabel = new System.Windows.Forms.Label();
+            this.SubTotalLabel = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.nameLabel = new System.Windows.Forms.Label();
             this.sellPriceLabel = new System.Windows.Forms.Label();
@@ -41,7 +41,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.stockLabel = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.itemPicture = new System.Windows.Forms.PictureBox();
             this.label4 = new System.Windows.Forms.Label();
             this.entryNameFill = new System.Windows.Forms.TextBox();
             this.BT_AddProduct = new System.Windows.Forms.Button();
@@ -57,15 +56,16 @@
             this.BT_saveEntry = new System.Windows.Forms.Button();
             this.BT_NewEntry = new System.Windows.Forms.Button();
             this.EntryNameLabel = new System.Windows.Forms.Label();
+            this.itemPicture = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
             this.EditPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.itemPicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.productCount)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.itemPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // splitContainer1
@@ -90,7 +90,7 @@
             // 
             this.EditPanel.Controls.Add(this.filterItems);
             this.EditPanel.Controls.Add(this.itemCode);
-            this.EditPanel.Controls.Add(this.subtotalLabel);
+            this.EditPanel.Controls.Add(this.SubTotalLabel);
             this.EditPanel.Controls.Add(this.label9);
             this.EditPanel.Controls.Add(this.nameLabel);
             this.EditPanel.Controls.Add(this.sellPriceLabel);
@@ -134,15 +134,15 @@
             this.itemCode.Text = "Default";
             this.itemCode.TextAlign = System.Drawing.ContentAlignment.TopRight;
             // 
-            // subtotalLabel
+            // SubTotalLabel
             // 
-            this.subtotalLabel.AutoSize = true;
-            this.subtotalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
-            this.subtotalLabel.Location = new System.Drawing.Point(68, 494);
-            this.subtotalLabel.Name = "subtotalLabel";
-            this.subtotalLabel.Size = new System.Drawing.Size(34, 25);
-            this.subtotalLabel.TabIndex = 51;
-            this.subtotalLabel.Text = "$0";
+            this.SubTotalLabel.AutoSize = true;
+            this.SubTotalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
+            this.SubTotalLabel.Location = new System.Drawing.Point(84, 494);
+            this.SubTotalLabel.Name = "SubTotalLabel";
+            this.SubTotalLabel.Size = new System.Drawing.Size(34, 25);
+            this.SubTotalLabel.TabIndex = 51;
+            this.SubTotalLabel.Text = "$0";
             // 
             // label9
             // 
@@ -150,9 +150,9 @@
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F);
             this.label9.Location = new System.Drawing.Point(3, 492);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(73, 25);
+            this.label9.Size = new System.Drawing.Size(90, 25);
             this.label9.TabIndex = 50;
-            this.label9.Text = "Precio:";
+            this.label9.Text = "Subtotal:";
             // 
             // nameLabel
             // 
@@ -225,18 +225,6 @@
             this.label5.TabIndex = 43;
             this.label5.Text = "Disponibles: ";
             // 
-            // itemPicture
-            // 
-            this.itemPicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.itemPicture.Image = global::Inventario.Properties.Resources.missingImage;
-            this.itemPicture.Location = new System.Drawing.Point(7, 359);
-            this.itemPicture.Name = "itemPicture";
-            this.itemPicture.Padding = new System.Windows.Forms.Padding(5);
-            this.itemPicture.Size = new System.Drawing.Size(80, 80);
-            this.itemPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.itemPicture.TabIndex = 42;
-            this.itemPicture.TabStop = false;
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -256,7 +244,7 @@
             // 
             // BT_AddProduct
             // 
-            this.BT_AddProduct.Location = new System.Drawing.Point(6, 522);
+            this.BT_AddProduct.Location = new System.Drawing.Point(6, 539);
             this.BT_AddProduct.Name = "BT_AddProduct";
             this.BT_AddProduct.Size = new System.Drawing.Size(250, 23);
             this.BT_AddProduct.TabIndex = 39;
@@ -370,6 +358,7 @@
             this.BT_cancelEntry.TabIndex = 5;
             this.BT_cancelEntry.Text = "Cancelar";
             this.BT_cancelEntry.UseVisualStyleBackColor = true;
+            this.BT_cancelEntry.Click += new System.EventHandler(this.BT_cancelEntry_Click);
             // 
             // BT_saveEntry
             // 
@@ -401,6 +390,18 @@
             this.EntryNameLabel.TabIndex = 2;
             this.EntryNameLabel.Text = "EntryName";
             // 
+            // itemPicture
+            // 
+            this.itemPicture.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.itemPicture.Image = global::Inventario.Properties.Resources.missingImage;
+            this.itemPicture.Location = new System.Drawing.Point(7, 359);
+            this.itemPicture.Name = "itemPicture";
+            this.itemPicture.Padding = new System.Windows.Forms.Padding(5);
+            this.itemPicture.Size = new System.Drawing.Size(80, 80);
+            this.itemPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.itemPicture.TabIndex = 42;
+            this.itemPicture.TabStop = false;
+            // 
             // EntryItemsForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -417,11 +418,11 @@
             this.splitContainer1.ResumeLayout(false);
             this.EditPanel.ResumeLayout(false);
             this.EditPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.itemPicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.productCount)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.itemPicture)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -435,7 +436,7 @@
         private System.Windows.Forms.Label EntryNameLabel;
         private System.Windows.Forms.Panel EditPanel;
         private System.Windows.Forms.Label itemCode;
-        private System.Windows.Forms.Label subtotalLabel;
+        private System.Windows.Forms.Label SubTotalLabel;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label nameLabel;
         private System.Windows.Forms.Label sellPriceLabel;

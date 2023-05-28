@@ -233,7 +233,7 @@ namespace Inventario
             if (selectedItem != null)
             {
                 var Subtotal = (selectedItem.Price * (int)productCount.Value);
-                subtotalLabel.Text = "$ " + String.Format("{0:0.00}", Subtotal);
+                SubTotalLabel.Text = "$ " + String.Format("{0:0.00}", Subtotal);
             }
         }
 
@@ -292,7 +292,7 @@ namespace Inventario
             if (selectedItem != null) {
                 var Subtotal = (selectedItem.Price * (int)productCount.Value);
 
-                subtotalLabel.Text = "$ " + String.Format("{0:0.00}", Subtotal);
+                SubTotalLabel.Text = "$ " + String.Format("{0:0.00}", Subtotal);
             }
         }
 
@@ -301,6 +301,31 @@ namespace Inventario
             if (newEntry != null)
             {
                 newEntry.date = EntryDate.SelectionStart;
+            }
+        }
+
+        private void BT_cancelEntry_Click(object sender, EventArgs e)
+        {
+            if (newEntry != null)
+            {
+                DialogResult dialogResult = MessageBox.Show("¿Desea descartar el registro de entrada?", "Confirmar operacion.", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    newEntry = null;
+                    SetDataView(newEntry);
+                    TotalLabel.Text = "$ 0";
+                    SetItemPreview(new Item());
+                    itemsDropDown.SelectedIndex = -1;
+                    itemsDropDown.TabIndex = 0;
+                    itemsDropDown.Text = "";
+                    productCount.Value = 1;
+                    EntryNameLabel.Text = "";
+                    SubTotalLabel.Text = "";
+                }
+                else if (dialogResult == DialogResult.No)
+                {
+                    //do something else
+                }
             }
         }
     }

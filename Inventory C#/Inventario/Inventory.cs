@@ -23,6 +23,10 @@ namespace Inventario
 
         public Form ItemsForm = null;
 
+        private DateTime startTime;
+
+        public System.Windows.Forms.Timer timer = null;
+
         public static BindingList<Item> ItemsList = new BindingList<Item>(); 
         public static BindingList<EntryData> EntriesData = new BindingList<EntryData>();
         public static BindingList<ExitData> ExitsData = new BindingList<ExitData>();
@@ -43,6 +47,19 @@ namespace Inventario
                 SaveDataBase();
             }
 
+            timer = new System.Windows.Forms.Timer();
+
+            timer.Interval = 1000;
+            timer.Tick += Timer_Tick;
+
+
+
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            TimeSpan elapsedTime = DateTime.Now - startTime;
+            sesionTime.Text = elapsedTime.ToString(@"hh\:mm\:ss");
         }
 
         public static void UpdateDictionary()
@@ -187,6 +204,11 @@ namespace Inventario
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            actualSesionDate.Text = DateTime.Now.ToString();
+
+            startTime = DateTime.Now;
+            timer.Start();
+
             // Vaciar el contenido de la carpeta temporal
             ClearTemp();
         }
@@ -263,7 +285,7 @@ namespace Inventario
                 ItemsForm = null;
             }
 
-            var soundStream = Properties.Resources.nose;
+            var soundStream = Properties.Resources.buttonClick;
 
             // Crea una instancia de SoundPlayer utilizando el flujo de recursos
             soundPlayer = new SoundPlayer(soundStream);

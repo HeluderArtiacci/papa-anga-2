@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
+  <asmv1:assemblyIdentity name="Inventario.exe" version="1.0.0.1" publicKeyToken="20a0e40f0126b56e" language="neutral" processorArchitecture="msil" type="win32" />
+  <application />
+  <entryPoint>
+    <assemblyIdentity name="Inventario" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="Inventario.exe" parameters="" />
+  </entryPoint>
+  <trustInfo>
+    <security>
+      <applicationRequestMinimum>
+        <PermissionSet Unrestricted="true" ID="Custom" SameSite="site" />
+        <defaultAssemblyRequest permissionSetReference="Custom" />
+      </applicationRequestMinimum>
+      <requestedPrivileges xmlns="urn:schemas-microsoft-com:asm.v3">
+        <!--
+          Opciones del manifiesto de Control de cuentas de usuario
+          Si quiere cambiar el nivel de Control de cuentas de usuario de Windows, reemplace el
+          nodo requestedExecutionLevel por alguno de los siguientes.
+
+        <requestedExecutionLevel  level="asInvoker" uiAccess="false" />
+        <requestedExecutionLevel  level="requireAdministrator" uiAccess="false" />
+        <requestedExecutionLevel  level="highestAvailable" uiAccess="false" />
+
+         Si desea usar la virtualización de archivos y del Registro para la
+         compatibilidad con versiones anteriores, elimine el nodo requestedExecutionLevel.
+    -->
+        <requestedExecutionLevel level="asInvoker" uiAccess="false" />
+      </requestedPrivileges>
+    </security>
+  </trustInfo>
+  <dependency>
+    <dependentOS>
+      <osVersionInfo>
+        <os majorVersion="5" minorVersion="1" buildNumber="2600" servicePackMajor="0" />
+      </osVersionInfo>
+    </dependentOS>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="preRequisite" allowDelayedBinding="true">
+      <assemblyIdentity name="Microsoft.Windows.CommonLanguageRuntime" version="4.0.30319.0" />
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Inventario.exe" size="481224">
+      <assemblyIdentity name="Inventario" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>reULG83VxsdgXL+SDKm0JMuQWKK+Eh3C8PmsHKcTsEQ=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <file name="Inventario.exe.config" size="189">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>R+Wg8QGvQVHX8T0ta/qbhH1bXkqY0fRnS3wBV3J0bN8=</dsig:DigestValue>
+    </hash>
+  </file>
+<publisherIdentity name="CN=MOVILSOFTPC\movil" issuerKeyHash="f5ded042aae1905fd5f52f7377d76b9045cb40a9" /><Signature Id="StrongNameSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>Kx8fjyXyt/zsU1EN76dBElTlHEci/Vb7TzVstA942L0=</DigestValue></Reference></SignedInfo><SignatureValue>XI+oynFC6aURy4lHd89vn1Y6NFK66cU1yRDblmTd7pQ0dwMGU5XznN57EOzo2K8hIMYjAU/scePqbT76tu2YwYJ8PH1lW9Vx1/lo8rwwrvOFDp5AB36Ix1sqP0ve9BCTCrojMeJeoifAk/17QUr5dFYSvk95j9LUgkOLpO4PRdA=</SignatureValue><KeyInfo Id="StrongNameKeyInfo"><KeyValue><RSAKeyValue><Modulus>wjOJK4qTx4Bom4mcggjoQ3GMhor7OAe/srp/SaTetJZr4kGvNfxhfy3BEf+Ucc63z+K5vWWPGasiJoLFj5XZZuC3omWdVXFKoU2Pk6RfQ9utRV4/IERlR6X2nJdCv7NDcHl5kwrO65h8C6HsFy1cMzwgBkhURB/BecaC+6NQIaU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><msrel:RelData xmlns:msrel="http://schemas.microsoft.com/windows/rel/2005/reldata"><r:license xmlns:r="urn:mpeg:mpeg21:2003:01-REL-R-NS" xmlns:as="http://schemas.microsoft.com/windows/pki/2005/Authenticode"><r:grant><as:ManifestInformation Hash="bdd8780fb46c354ffb56fd22471ce5541241a7ef0d5153ecfcb7f2258f1f1f2b" Description="" Url=""><as:assemblyIdentity name="Inventario.exe" version="1.0.0.1" publicKeyToken="20a0e40f0126b56e" language="neutral" processorArchitecture="msil" type="win32" /></as:ManifestInformation><as:SignedBy /><as:AuthenticodePublisher><as:X509SubjectName>CN=MOVILSOFTPC\movil</as:X509SubjectName></as:AuthenticodePublisher></r:grant><r:issuer><Signature Id="AuthenticodeSignature" xmlns="http://www.w3.org/2000/09/xmldsig#"><SignedInfo><CanonicalizationMethod Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /><SignatureMethod Algorithm="http://www.w3.org/2000/09/xmldsig#rsa-sha256" /><Reference URI=""><Transforms><Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" /><Transform Algorithm="http://www.w3.org/2001/10/xml-exc-c14n#" /></Transforms><DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" /><DigestValue>US5WTGDT5D73cqweYBJFLy3JTYPhVuojmEIR2VL3iOQ=</DigestValue></Reference></SignedInfo><SignatureValue>RLhqB1vG9vdJ/UFCiZwytuYnVY507Hb4SUf0t6a51NRTt79YKwf3vb8kmpr5Lzf9g8r9J8j5S8gUZJozJRMPV32nfizmdMEnGnTIGsxr+tv9iWcxR50tl3VdMml95mgUjMBbsmeD64sGoEWpqmvDYcvjfMClI2vh9Tt9EKDXorg=</SignatureValue><KeyInfo><KeyValue><RSAKeyValue><Modulus>wjOJK4qTx4Bom4mcggjoQ3GMhor7OAe/srp/SaTetJZr4kGvNfxhfy3BEf+Ucc63z+K5vWWPGasiJoLFj5XZZuC3omWdVXFKoU2Pk6RfQ9utRV4/IERlR6X2nJdCv7NDcHl5kwrO65h8C6HsFy1cMzwgBkhURB/BecaC+6NQIaU=</Modulus><Exponent>AQAB</Exponent></RSAKeyValue></KeyValue><X509Data><X509Certificate>MIIB3TCCAUagAwIBAgIQfvYcXWnKxJRGUAPjkDmOdTANBgkqhkiG9w0BAQsFADAtMSswKQYDVQQDHiIATQBPAFYASQBMAFMATwBGAFQAUABDAFwAbQBvAHYAaQBsMB4XDTIzMDUyODE4Mzg1NFoXDTI0MDUyODAwMzg1NFowLTErMCkGA1UEAx4iAE0ATwBWAEkATABTAE8ARgBUAFAAQwBcAG0AbwB2AGkAbDCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEAwjOJK4qTx4Bom4mcggjoQ3GMhor7OAe/srp/SaTetJZr4kGvNfxhfy3BEf+Ucc63z+K5vWWPGasiJoLFj5XZZuC3omWdVXFKoU2Pk6RfQ9utRV4/IERlR6X2nJdCv7NDcHl5kwrO65h8C6HsFy1cMzwgBkhURB/BecaC+6NQIaUCAwEAATANBgkqhkiG9w0BAQsFAAOBgQCJF4LTT2NcY5AzqJbZvR47bmAKdQTnKgNGGPaDIgrTGiwcS3zLMA1Hxg1GoKauZJop1bimGEr5ZFPcpSCNiVm8ksp7PJVHh7P2SBUSzGzYO34orMGiFyTSWBlA2Q1LOYpHiGuK03OYnE24OAw6U9zTfBnAO1vRC48Bx2JPqWfpgw==</X509Certificate></X509Data></KeyInfo></Signature></r:issuer></r:license></msrel:RelData></KeyInfo></Signature></asmv1:assembly>
